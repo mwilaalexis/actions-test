@@ -7,7 +7,7 @@ jobs:
   run-data-pipeline:
     runs-on: ubuntu-latest
     steps:
-      - name: checkoutrepo content
+      - name: checkoutrepo content  
         uses: actions/chekout@v4
         with:
           token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
