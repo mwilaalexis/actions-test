@@ -21,11 +21,6 @@ jobs:
       - name: install dependences
         run: pip install -r requirements.txt
 
-      - name: run data pipeline
-        env:
-          YT_API_Key: ${{secrets.YT_API_key}}
-        run: python data_pipeline.py
-
       - name: check for changes
         id: git-check
         run: |
