@@ -1,0 +1,36 @@
+name: data-pipeline-workflow
+on:
+  push:
+    branches:
+      - main
+jobs:
+  run-data-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkoutrepo content
+        uses: actions/chekout@v4
+        with:
+          token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
+
+      - name: Setup python
+        uses: actions/setup-python@5
+        with:
+          python-version: "3.9"
+          cache: "pip"
+
+      - name: install dependences
+        run: pip install -r requirements.txt
+
+      - name: run data pipeline
+        env:
+          YT_API_Key: ${{secrets.YT_API_key}}
+        run: python data_pipeline.py
+
+      - name: check for changes
+        id: git-check
+        run: |
+          if git status --porcelain; then
+              echo "changes=true" >> $GITHUB_OUTPUT
+          else
+              echo "changes=false" >> $GITHUB_OUTPUT
+          fi
